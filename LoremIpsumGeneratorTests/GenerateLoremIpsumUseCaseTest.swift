@@ -10,7 +10,7 @@ import XCTest
 struct GenerateLoremIpsumUseCase {
     var generateCount: Int = 0
     mutating func generateLoremIpsum() {
-        generateCount = 1
+        generateCount += 1
     }
 }
 
@@ -28,6 +28,15 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
         sut.generateLoremIpsum()
         
         XCTAssertEqual(sut.generateCount, 1)
+    }
+    
+    func test_whenGenerateMoreThanOne_shouldGenerateMoreThanOne() {
+        var sut = GenerateLoremIpsumUseCase()
+        
+        sut.generateLoremIpsum()
+        sut.generateLoremIpsum()
+        
+        XCTAssertEqual(sut.generateCount, 2)
     }
 
 }
