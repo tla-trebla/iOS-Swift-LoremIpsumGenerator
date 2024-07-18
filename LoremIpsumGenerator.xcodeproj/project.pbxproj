@@ -6,13 +6,8 @@
 	objectVersion = 56;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		5EF2FFEA2C493E2B009CBF40 /* LoremIpsumGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EF2FFE92C493E2B009CBF40 /* LoremIpsumGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		5EF2FFE62C493E2B009CBF40 /* LoremIpsumGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LoremIpsumGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5EF2FFE92C493E2B009CBF40 /* LoremIpsumGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoremIpsumGenerator.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +40,6 @@
 		5EF2FFE82C493E2B009CBF40 /* LoremIpsumGenerator */ = {
 			isa = PBXGroup;
 			children = (
-				5EF2FFE92C493E2B009CBF40 /* LoremIpsumGenerator.h */,
 			);
 			path = LoremIpsumGenerator;
 			sourceTree = "<group>";
@@ -57,7 +51,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EF2FFEA2C493E2B009CBF40 /* LoremIpsumGenerator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
