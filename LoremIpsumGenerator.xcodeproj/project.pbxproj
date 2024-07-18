@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5EF2FFF82C493EB8009CBF40 /* LoremIpsumGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EF2FFE62C493E2B009CBF40 /* LoremIpsumGenerator.framework */; platformFilters = (macos, ); };
+		5EF2FFFF2C495770009CBF40 /* GenerateLoremIpsumUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF2FFFE2C495770009CBF40 /* GenerateLoremIpsumUseCaseTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		5EF2FFE62C493E2B009CBF40 /* LoremIpsumGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LoremIpsumGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF2FFF42C493EB8009CBF40 /* LoremIpsumGeneratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoremIpsumGeneratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EF2FFFE2C495770009CBF40 /* GenerateLoremIpsumUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateLoremIpsumUseCaseTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 		5EF2FFF52C493EB8009CBF40 /* LoremIpsumGeneratorTests */ = {
 			isa = PBXGroup;
 			children = (
+				5EF2FFFE2C495770009CBF40 /* GenerateLoremIpsumUseCaseTest.swift */,
 			);
 			path = LoremIpsumGeneratorTests;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 					};
 					5EF2FFF32C493EB8009CBF40 = {
 						CreatedOnToolsVersion = 15.4;
+						LastSwiftMigration = 1540;
 					};
 				};
 			};
@@ -191,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EF2FFFF2C495770009CBF40 /* GenerateLoremIpsumUseCaseTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +406,7 @@
 		5EF2FFFC2C493EB8009CBF40 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 75KSF446RQ;
@@ -413,6 +419,7 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -421,6 +428,7 @@
 		5EF2FFFD2C493EB8009CBF40 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 75KSF446RQ;
