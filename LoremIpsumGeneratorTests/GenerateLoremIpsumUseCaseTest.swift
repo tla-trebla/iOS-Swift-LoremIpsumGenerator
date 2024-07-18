@@ -26,15 +26,13 @@ struct GenerateLoremIpsumUseCase {
 final class GenerateLoremIpsumUseCaseTest: XCTestCase {
 
     func test_whenInitialize_shouldNotGenerate() {
-        let repository = GenerateLoremIpsumRepositorySpy()
-        let sut = GenerateLoremIpsumUseCase(repository: repository)
+        let (_, repository) = makeSUT()
         
         XCTAssertEqual(repository.generateCount, 0)
     }
     
     func test_whenGenerate_shouldGenerate() {
-        let repository = GenerateLoremIpsumRepositorySpy()
-        var sut = GenerateLoremIpsumUseCase(repository: repository)
+        let (sut, repository) = makeSUT()
         
         sut.generateLoremIpsum()
         
@@ -42,8 +40,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     }
     
     func test_whenGenerateMoreThanOne_shouldGenerateMoreThanOne() {
-        let repository = GenerateLoremIpsumRepositorySpy()
-        var sut = GenerateLoremIpsumUseCase(repository: repository)
+        let (sut, repository) = makeSUT()
         
         sut.generateLoremIpsum()
         sut.generateLoremIpsum()
@@ -54,15 +51,21 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     func test_generateWithTextIncluded_shouldReturnText() {
         
     }
-
-}
-
-// MARK: - Helper
-
-final class GenerateLoremIpsumRepositorySpy: GenerateLoremIpsumRepository {
-    private(set) var generateCount = 0
     
-    func generateLoremIpsum() {
-        generateCount += 1
+    // MARK: - Helper
+    private func makeSUT() -> (sut: GenerateLoremIpsumUseCase, GenerateLoremIpsumRepositorySpy) {
+        let repository = GenerateLoremIpsumRepositorySpy()
+        let sut = GenerateLoremIpsumUseCase(repository: repository)
+        
+        return (sut, repository)
     }
+
+    final class GenerateLoremIpsumRepositorySpy: GenerateLoremIpsumRepository {
+        private(set) var generateCount = 0
+        
+        func generateLoremIpsum() {
+            generateCount += 1
+        }
+    }
+
 }
