@@ -5,34 +5,8 @@
 //  Created by Albert Pangestu on 18/07/24.
 //
 
+@testable import LoremIpsumGenerator
 import XCTest
-
-protocol GenerateLoremIpsumRepository {
-    func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping(Result<TextResponse, Error>) -> Void)
-}
-
-struct TextResponse: Equatable {
-    let text: String
-    
-    var paragraphs: [String] {
-        text.split(separator: "\n").map(String.init)
-    }
-    var numberOfParagraphs: Int {
-        paragraphs.count
-    }
-}
-
-struct GenerateLoremIpsumUseCase {
-    let repository: GenerateLoremIpsumRepository
-    
-    init(repository: GenerateLoremIpsumRepository) {
-        self.repository = repository
-    }
-    
-    func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping(Result<TextResponse, Error>) -> Void) {
-        repository.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs, completion: completion)
-    }
-}
 
 final class GenerateLoremIpsumUseCaseTest: XCTestCase {
 
