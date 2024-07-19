@@ -16,7 +16,10 @@ class RemoteGenerateLoremIpsumRepository: GenerateLoremIpsumRepository {
     }
     
     func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
-        try await client.get(numberOfParagraphs: numberOfParagraphs)
+        if numberOfParagraphs < 0 {
+            throw ErrorGenerate.invalidNumberOfParagraphsInput
+        }
+        return try await client.get(numberOfParagraphs: numberOfParagraphs)
     }
 }
 
@@ -62,6 +65,26 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
         }
         
         XCTAssertEqual(capturedText, text)
+    }
+    
+    func test_whenGenerateWithInvalidParameter_shouldReturnError() async throws {
+        let error = NSError(domain: "Whatever", code: -1)
+        let client = HTTPClientStub(result: .failure(error))
+        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        var capturedError: ErrorGenerate?
+        
+        do {
+            _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
+            XCTFail("Should showing error, success is not an expectation")
+        } catch {
+            if let error = error as? ErrorGenerate {
+                capturedError = error
+            } else {
+                XCTFail("Should showing the custom error, unknown error is not an expectation")
+            }
+        }
+        
+        XCTAssertEqual(capturedError, ErrorGenerate.invalidNumberOfParagraphsInput)
     }
     
     // MARK: - Helpers
