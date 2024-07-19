@@ -8,7 +8,7 @@
 import XCTest
 
 protocol GenerateLoremIpsumRepository {
-    func generateLoremIpsum()
+    func generateLoremIpsum(completion: @escaping(Result<String, Error>) -> Void)
 }
 
 struct GenerateLoremIpsumUseCase {
@@ -18,8 +18,8 @@ struct GenerateLoremIpsumUseCase {
         self.repository = repository
     }
     
-    func generateLoremIpsum() {
-        repository.generateLoremIpsum()
+    func generateLoremIpsum(completion: @escaping(Result<String, Error>) -> Void) {
+        repository.generateLoremIpsum(completion: completion)
     }
 }
 
@@ -34,7 +34,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     func test_whenGenerate_shouldGenerate() {
         let (sut, repository) = makeSUT()
         
-        sut.generateLoremIpsum()
+        sut.generateLoremIpsum { _ in }
         
         XCTAssertEqual(repository.generateCount, 1)
     }
@@ -42,14 +42,28 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     func test_whenGenerateMoreThanOne_shouldGenerateMoreThanOne() {
         let (sut, repository) = makeSUT()
         
-        sut.generateLoremIpsum()
-        sut.generateLoremIpsum()
+        sut.generateLoremIpsum { _ in }
+        sut.generateLoremIpsum { _ in }
         
         XCTAssertEqual(repository.generateCount, 2)
     }
     
-    func test_generateWithTextIncluded_shouldReturnText() {
+    func test_whenFailedToGenerate_shouldReturnError() {
+        let error = NSError(domain: "Any Error", code: 1)
+        let repository = GenerateLoremIpsumRepositoryStub(result: .failure(error))
+        let sut = GenerateLoremIpsumUseCase(repository: repository)
+        var capturedError: Error?
         
+        sut.generateLoremIpsum { result in
+            switch result {
+            case .success:
+                XCTFail("Should be error, success is not a correct expectation.")
+            case .failure(let error):
+                capturedError = error
+            }
+        }
+        
+        XCTAssertNotNil(capturedError)
     }
     
     // MARK: - Helper
@@ -63,8 +77,20 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     final class GenerateLoremIpsumRepositorySpy: GenerateLoremIpsumRepository {
         private(set) var generateCount = 0
         
-        func generateLoremIpsum() {
+        func generateLoremIpsum(completion: @escaping (Result<String, Error>) -> Void) {
             generateCount += 1
+        }
+    }
+    
+    final class GenerateLoremIpsumRepositoryStub: GenerateLoremIpsumRepository {
+        private(set) var result: Result<String, Error>
+        
+        init(result: Result<String, Error>) {
+            self.result = result
+        }
+        
+        func generateLoremIpsum(completion: @escaping (Result<String, Error>) -> Void) {
+            completion(result)
         }
     }
 
