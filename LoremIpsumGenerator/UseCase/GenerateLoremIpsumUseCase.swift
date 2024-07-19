@@ -13,6 +13,14 @@ struct GenerateLoremIpsumUseCase {
     }
     
     func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping(Result<TextResponse, Error>) -> Void) {
+        if numberOfParagraphs < 0 {
+            completion(.failure(ErrorGenerate.invalidNumberOfParagraphsInput))
+            return
+        }
         repository.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs, completion: completion)
     }
+}
+
+enum ErrorGenerate: Error {
+    case invalidNumberOfParagraphsInput
 }
