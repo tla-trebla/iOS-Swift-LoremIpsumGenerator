@@ -66,6 +66,24 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
         XCTAssertNotNil(capturedError)
     }
     
+    func test_whenGenerate_shouldReturnText() {
+        let text = ""
+        let repository = GenerateLoremIpsumRepositoryStub(result: .success(text))
+        let sut = GenerateLoremIpsumUseCase(repository: repository)
+        var capturedText: String?
+        
+        sut.generateLoremIpsum { result in
+            switch result {
+            case .success(let success):
+                capturedText = success
+            case .failure(let failure):
+                XCTFail("Should be success, error is not an expectation")
+            }
+        }
+        
+        XCTAssertEqual(capturedText, text)
+    }
+    
     // MARK: - Helper
     private func makeSUT() -> (sut: GenerateLoremIpsumUseCase, GenerateLoremIpsumRepositorySpy) {
         let repository = GenerateLoremIpsumRepositorySpy()
