@@ -28,15 +28,13 @@ protocol HTTPClient {
 final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
 
     func test_whenInitialized_shouldNotRequest() {
-        let client = HTTPClientSpy()
-        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        let (_, client) = makeSUT()
         
         XCTAssertEqual(client.requestCount, 0)
     }
     
     func test_whenGenerate_shouldCount() async {
-        let client = HTTPClientSpy()
-        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        let (sut, client) = makeSUT()
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
@@ -44,8 +42,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     }
     
     func test_whenGenerateMoreThanOne_shouldCountMoreThanOne() async {
-        let client = HTTPClientSpy()
-        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        let (sut, client) = makeSUT()
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
@@ -54,6 +51,13 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func makeSUT() -> (sut: RemoteGenerateLoremIpsumRepository, HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        
+        return (sut, client)
+    }
+    
     final class HTTPClientSpy: HTTPClient {
         private(set) var requestCount: Int = 0
         
