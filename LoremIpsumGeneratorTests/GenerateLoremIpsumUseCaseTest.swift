@@ -28,7 +28,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     func test_whenInitialize_shouldNotGenerate() {
         let (_, repository) = makeSUT()
         
-        XCTAssertEqual(repository.generateCount, 0)
+        XCTAssertEqual(repository.messages, [])
     }
     
     func test_whenGenerate_shouldGenerate() {
@@ -36,7 +36,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
         
         sut.generateLoremIpsum { _ in }
         
-        XCTAssertEqual(repository.generateCount, 1)
+        XCTAssertEqual(repository.messages, [.generateText])
     }
     
     func test_whenGenerateMoreThanOne_shouldGenerateMoreThanOne() {
@@ -45,7 +45,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
         sut.generateLoremIpsum { _ in }
         sut.generateLoremIpsum { _ in }
         
-        XCTAssertEqual(repository.generateCount, 2)
+        XCTAssertEqual(repository.messages, [.generateText, .generateText])
     }
     
     func test_whenFailedToGenerate_shouldReturnError() {
@@ -75,10 +75,14 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     }
 
     final class GenerateLoremIpsumRepositorySpy: GenerateLoremIpsumRepository {
-        private(set) var generateCount = 0
+        private(set) var messages = [Message]()
         
         func generateLoremIpsum(completion: @escaping (Result<String, Error>) -> Void) {
-            generateCount += 1
+            messages.append(.generateText)
+        }
+        
+        enum Message {
+            case generateText
         }
     }
     
