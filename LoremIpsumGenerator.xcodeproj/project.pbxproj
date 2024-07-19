@@ -12,6 +12,8 @@
 		5E82DE272C4A2D4D005ABE94 /* GenerateLoremIpsumRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E82DE262C4A2D4D005ABE94 /* GenerateLoremIpsumRepositoryInterface.swift */; };
 		5E82DE2A2C4A2D72005ABE94 /* TextResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E82DE292C4A2D72005ABE94 /* TextResponse.swift */; };
 		5E82DE2D2C4A2F5B005ABE94 /* RemoteGenerateLoremIpsumRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E82DE2C2C4A2F5B005ABE94 /* RemoteGenerateLoremIpsumRepositoryTest.swift */; };
+		5E9C4E812C4B0A3000B529B5 /* RemoteGenerateLoremIpsumRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9C4E802C4B0A3000B529B5 /* RemoteGenerateLoremIpsumRepository.swift */; };
+		5E9C4E832C4B0A5F00B529B5 /* HTTPClientInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9C4E822C4B0A5F00B529B5 /* HTTPClientInterface.swift */; };
 		5EF2FFF82C493EB8009CBF40 /* LoremIpsumGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EF2FFE62C493E2B009CBF40 /* LoremIpsumGenerator.framework */; platformFilters = (macos, ); };
 		5EF2FFFF2C495770009CBF40 /* GenerateLoremIpsumUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF2FFFE2C495770009CBF40 /* GenerateLoremIpsumUseCaseTest.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +34,8 @@
 		5E82DE262C4A2D4D005ABE94 /* GenerateLoremIpsumRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateLoremIpsumRepositoryInterface.swift; sourceTree = "<group>"; };
 		5E82DE292C4A2D72005ABE94 /* TextResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextResponse.swift; sourceTree = "<group>"; };
 		5E82DE2C2C4A2F5B005ABE94 /* RemoteGenerateLoremIpsumRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteGenerateLoremIpsumRepositoryTest.swift; sourceTree = "<group>"; };
+		5E9C4E802C4B0A3000B529B5 /* RemoteGenerateLoremIpsumRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteGenerateLoremIpsumRepository.swift; sourceTree = "<group>"; };
+		5E9C4E822C4B0A5F00B529B5 /* HTTPClientInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientInterface.swift; sourceTree = "<group>"; };
 		5EF2FFE62C493E2B009CBF40 /* LoremIpsumGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LoremIpsumGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF2FFF42C493EB8009CBF40 /* LoremIpsumGeneratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoremIpsumGeneratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF2FFFE2C495770009CBF40 /* GenerateLoremIpsumUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateLoremIpsumUseCaseTest.swift; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				5E82DE262C4A2D4D005ABE94 /* GenerateLoremIpsumRepositoryInterface.swift */,
+				5E9C4E802C4B0A3000B529B5 /* RemoteGenerateLoremIpsumRepository.swift */,
+				5E9C4E822C4B0A5F00B529B5 /* HTTPClientInterface.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -254,8 +260,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E82DE242C4A2D1A005ABE94 /* GenerateLoremIpsumUseCase.swift in Sources */,
+				5E9C4E832C4B0A5F00B529B5 /* HTTPClientInterface.swift in Sources */,
 				5E82DE272C4A2D4D005ABE94 /* GenerateLoremIpsumRepositoryInterface.swift in Sources */,
 				5E82DE2A2C4A2D72005ABE94 /* TextResponse.swift in Sources */,
+				5E9C4E812C4B0A3000B529B5 /* RemoteGenerateLoremIpsumRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

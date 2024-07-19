@@ -5,7 +5,7 @@
 //  Created by Albert Pangestu on 19/07/24.
 //
 
-class GenerateLoremIpsumUseCase {
+final class GenerateLoremIpsumUseCase {
     let repository: GenerateLoremIpsumRepository
     
     init(repository: GenerateLoremIpsumRepository) {
