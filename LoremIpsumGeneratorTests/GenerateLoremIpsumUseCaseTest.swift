@@ -61,8 +61,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     
     func test_whenFailedToGenerate_shouldReturnError() {
         let error = NSError(domain: "Any Error", code: 1)
-        let repository = GenerateLoremIpsumRepositoryStub(result: .failure(error))
-        let sut = GenerateLoremIpsumUseCase(repository: repository)
+        let (sut, repository) = makeSUT(result: .failure(error))
         var capturedError: Error?
         
         sut.generateLoremIpsum(numberOfParagraphs: 1) { result in
@@ -79,8 +78,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     
     func test_whenGenerate_shouldReturnText() {
         let text = TextResponse(text: "Lorem ipsum tincidunt vitae semper quis lectus.\n")
-        let repository = GenerateLoremIpsumRepositoryStub(result: .success(text))
-        let sut = GenerateLoremIpsumUseCase(repository: repository)
+        let (sut, repository) = makeSUT(result: .success(text))
         var capturedText: TextResponse?
         
         sut.generateLoremIpsum(numberOfParagraphs: 1) { result in
@@ -96,6 +94,13 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     }
     
     // MARK: - Helper
+    func makeSUT(result: Result<TextResponse, Error>) -> (sut: GenerateLoremIpsumUseCase, GenerateLoremIpsumRepositoryStub) {
+        let repository = GenerateLoremIpsumRepositoryStub(result: result)
+        let sut = GenerateLoremIpsumUseCase(repository: repository)
+        
+        return (sut, repository)
+    }
+    
     private func makeSUT() -> (sut: GenerateLoremIpsumUseCase, GenerateLoremIpsumRepositorySpy) {
         let repository = GenerateLoremIpsumRepositorySpy()
         let sut = GenerateLoremIpsumUseCase(repository: repository)
