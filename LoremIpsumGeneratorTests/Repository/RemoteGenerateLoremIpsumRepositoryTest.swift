@@ -43,6 +43,16 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
         XCTAssertEqual(client.requestCount, 1)
     }
     
+    func test_whenGenerateMoreThanOne_shouldCountMoreThanOne() async {
+        let client = HTTPClientSpy()
+        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        
+        _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        
+        XCTAssertEqual(client.requestCount, 2)
+    }
+    
     // MARK: - Helpers
     final class HTTPClientSpy: HTTPClient {
         private(set) var requestCount: Int = 0
