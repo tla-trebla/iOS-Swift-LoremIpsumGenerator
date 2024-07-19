@@ -8,7 +8,18 @@
 import XCTest
 
 protocol GenerateLoremIpsumRepository {
-    func generateLoremIpsum(completion: @escaping(Result<String, Error>) -> Void)
+    func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping(Result<TextResponse, Error>) -> Void)
+}
+
+struct TextResponse: Equatable {
+    let text: String
+    
+    var paragraphs: [String] {
+        text.split(separator: "\n").map(String.init)
+    }
+    var numberOfParagraphs: Int {
+        paragraphs.count
+    }
 }
 
 struct GenerateLoremIpsumUseCase {
@@ -18,8 +29,8 @@ struct GenerateLoremIpsumUseCase {
         self.repository = repository
     }
     
-    func generateLoremIpsum(completion: @escaping(Result<String, Error>) -> Void) {
-        repository.generateLoremIpsum(completion: completion)
+    func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping(Result<TextResponse, Error>) -> Void) {
+        repository.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs, completion: completion)
     }
 }
 
@@ -34,7 +45,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     func test_whenGenerate_shouldGenerate() {
         let (sut, repository) = makeSUT()
         
-        sut.generateLoremIpsum { _ in }
+        sut.generateLoremIpsum(numberOfParagraphs: 1) { _ in }
         
         XCTAssertEqual(repository.messages, [.generateText])
     }
@@ -42,8 +53,8 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     func test_whenGenerateMoreThanOne_shouldGenerateMoreThanOne() {
         let (sut, repository) = makeSUT()
         
-        sut.generateLoremIpsum { _ in }
-        sut.generateLoremIpsum { _ in }
+        sut.generateLoremIpsum(numberOfParagraphs: 1) { _ in }
+        sut.generateLoremIpsum(numberOfParagraphs: 1) { _ in }
         
         XCTAssertEqual(repository.messages, [.generateText, .generateText])
     }
@@ -54,7 +65,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
         let sut = GenerateLoremIpsumUseCase(repository: repository)
         var capturedError: Error?
         
-        sut.generateLoremIpsum { result in
+        sut.generateLoremIpsum(numberOfParagraphs: 1) { result in
             switch result {
             case .success:
                 XCTFail("Should be error, success is not a correct expectation.")
@@ -67,12 +78,12 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     }
     
     func test_whenGenerate_shouldReturnText() {
-        let text = ""
+        let text = TextResponse(text: "Lorem ipsum tincidunt vitae semper quis lectus.\n")
         let repository = GenerateLoremIpsumRepositoryStub(result: .success(text))
         let sut = GenerateLoremIpsumUseCase(repository: repository)
-        var capturedText: String?
+        var capturedText: TextResponse?
         
-        sut.generateLoremIpsum { result in
+        sut.generateLoremIpsum(numberOfParagraphs: 1) { result in
             switch result {
             case .success(let success):
                 capturedText = success
@@ -95,7 +106,7 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     final class GenerateLoremIpsumRepositorySpy: GenerateLoremIpsumRepository {
         private(set) var messages = [Message]()
         
-        func generateLoremIpsum(completion: @escaping (Result<String, Error>) -> Void) {
+        func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping (Result<TextResponse, Error>) -> Void) {
             messages.append(.generateText)
         }
         
@@ -105,13 +116,13 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     }
     
     final class GenerateLoremIpsumRepositoryStub: GenerateLoremIpsumRepository {
-        private(set) var result: Result<String, Error>
+        private(set) var result: Result<TextResponse, Error>
         
-        init(result: Result<String, Error>) {
+        init(result: Result<TextResponse, Error>) {
             self.result = result
         }
         
-        func generateLoremIpsum(completion: @escaping (Result<String, Error>) -> Void) {
+        func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping (Result<TextResponse, Error>) -> Void) {
             completion(result)
         }
     }
