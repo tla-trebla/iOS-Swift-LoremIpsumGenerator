@@ -16,11 +16,14 @@ class RemoteGenerateLoremIpsumRepository: GenerateLoremIpsumRepository {
     }
     
     func generateLoremIpsum(numberOfParagraphs: Int) async throws -> LoremIpsumGenerator.TextResponse {
+        client.get()
         return TextResponse(text: "")
     }
 }
 
-protocol HTTPClient {}
+protocol HTTPClient {
+    func get()
+}
 
 final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
 
@@ -31,8 +34,21 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
         XCTAssertEqual(client.requestCount, 0)
     }
     
+    func test_whenGenerate_shouldCount() async {
+        let client = HTTPClientSpy()
+        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        
+        _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        
+        XCTAssertEqual(client.requestCount, 1)
+    }
+    
     // MARK: - Helpers
     final class HTTPClientSpy: HTTPClient {
-        let requestCount: Int = 0
+        private(set) var requestCount: Int = 0
+        
+        func get() {
+            requestCount += 1
+        }
     }
 }
