@@ -17,7 +17,7 @@ class RemoteGenerateLoremIpsumRepository: GenerateLoremIpsumRepository {
     
     func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
         if numberOfParagraphs < 0 {
-            throw ErrorGenerate.invalidNumberOfParagraphsInput
+            throw RepositoryError.InvalidParameter
         }
         let (data, _) = try await requestClient(numberOfParagraphs)
         return try decodeData(data)
@@ -38,11 +38,12 @@ class RemoteGenerateLoremIpsumRepository: GenerateLoremIpsumRepository {
             throw RepositoryError.ErrorDecoding
         }
     }
-}
-
-enum RepositoryError: Swift.Error {
-    case NetworkError
-    case ErrorDecoding
+    
+    enum RepositoryError: Swift.Error {
+        case InvalidParameter
+        case NetworkError
+        case ErrorDecoding
+    }
 }
 
 protocol HTTPClient {
@@ -94,21 +95,21 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     
     func test_whenGenerateWithInvalidParameter_shouldReturnError() async throws {
         let error = NSError(domain: "Whatever", code: -1)
-        let (sut, client) = makeSUT(result: .failure(error))
-        var capturedError: ErrorGenerate?
+        let (sut, _) = makeSUT(result: .failure(error))
+        var capturedError: RemoteGenerateLoremIpsumRepository.RepositoryError?
         
         do {
             _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
             XCTFail("Should showing error, success is not an expectation")
         } catch {
-            if let error = error as? ErrorGenerate {
+            if let error = error as? RemoteGenerateLoremIpsumRepository.RepositoryError {
                 capturedError = error
             } else {
                 XCTFail("Should showing the custom error, unknown error is not an expectation")
             }
         }
         
-        XCTAssertEqual(capturedError, ErrorGenerate.invalidNumberOfParagraphsInput)
+        XCTAssertEqual(capturedError, RemoteGenerateLoremIpsumRepository.RepositoryError.InvalidParameter)
     }
     
     // MARK: - Helpers
@@ -163,10 +164,10 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
                 throw JSONFileLoaderError.CannotDecodeFromURL
             }
         }
-    }
-    
-    enum JSONFileLoaderError: Swift.Error {
-        case CannotDecodeFromURL
-        case FileNotFound
+        
+        enum JSONFileLoaderError: Swift.Error {
+            case CannotDecodeFromURL
+            case FileNotFound
+        }
     }
 }
