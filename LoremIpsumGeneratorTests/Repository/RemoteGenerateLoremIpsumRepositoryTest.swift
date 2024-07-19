@@ -54,8 +54,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     
     func test_whenGenerate_shouldReturnResponse() async throws {
         let text = TextResponse(text: "Lorem ipsum tincidunt vitae semper quis lectus.\n")
-        let client = HTTPClientStub(result: .success(text))
-        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        let (sut, client) = makeSUT(result: .success(text))
         var capturedText: TextResponse?
         
         do {
@@ -69,8 +68,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     
     func test_whenGenerateWithInvalidParameter_shouldReturnError() async throws {
         let error = NSError(domain: "Whatever", code: -1)
-        let client = HTTPClientStub(result: .failure(error))
-        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        let (sut, client) = makeSUT(result: .failure(error))
         var capturedError: ErrorGenerate?
         
         do {
@@ -88,6 +86,13 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func makeSUT(result: Result<TextResponse, Error>) -> (sut: RemoteGenerateLoremIpsumRepository, HTTPClientStub) {
+        let client = HTTPClientStub(result: result)
+        let sut = RemoteGenerateLoremIpsumRepository(client: client)
+        
+        return (sut, client)
+    }
+    
     private func makeSUT() -> (sut: RemoteGenerateLoremIpsumRepository, HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteGenerateLoremIpsumRepository(client: client)
