@@ -12,12 +12,11 @@ struct GenerateLoremIpsumUseCase {
         self.repository = repository
     }
     
-    func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping(Result<TextResponse, Error>) -> Void) {
+    func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
         if numberOfParagraphs < 0 {
-            completion(.failure(ErrorGenerate.invalidNumberOfParagraphsInput))
-            return
+            throw ErrorGenerate.invalidNumberOfParagraphsInput
         }
-        repository.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs, completion: completion)
+        return try await repository.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs)
     }
 }
 

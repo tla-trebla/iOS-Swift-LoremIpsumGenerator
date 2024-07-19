@@ -6,5 +6,5 @@
 //
 
 protocol GenerateLoremIpsumRepository {
-    func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping(Result<TextResponse, Error>) -> Void)
+    func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse
 }

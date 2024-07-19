@@ -16,72 +16,61 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
         XCTAssertEqual(repository.messages, [])
     }
     
-    func test_whenGenerate_shouldGenerate() {
+    func test_whenGenerate_shouldGenerate() async {
         let (sut, repository) = makeSUT()
         
-        sut.generateLoremIpsum(numberOfParagraphs: 1) { _ in }
+        _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
         XCTAssertEqual(repository.messages, [.generateText])
     }
     
-    func test_whenGenerateMoreThanOne_shouldGenerateMoreThanOne() {
+    func test_whenGenerateMoreThanOne_shouldGenerateMoreThanOne() async {
         let (sut, repository) = makeSUT()
         
-        sut.generateLoremIpsum(numberOfParagraphs: 1) { _ in }
-        sut.generateLoremIpsum(numberOfParagraphs: 1) { _ in }
+        _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
         XCTAssertEqual(repository.messages, [.generateText, .generateText])
     }
     
-    func test_whenFailedToGenerate_shouldReturnError() {
+    func test_whenFailedToGenerate_shouldReturnError() async throws {
         let error = NSError(domain: "Any Error", code: 1)
         let (sut, _) = makeSUT(result: .failure(error))
         var capturedError: Error?
         
-        sut.generateLoremIpsum(numberOfParagraphs: 1) { result in
-            switch result {
-            case .success:
-                XCTFail("Should be error, success is not a correct expectation.")
-            case .failure(let error):
-                capturedError = error
-            }
+        do {
+            _ = try await sut.generateLoremIpsum(numberOfParagraphs: 1)
+            XCTFail("Should be error, success is not a correct expectation.")
+        } catch {
+            capturedError = error
         }
         
         XCTAssertNotNil(capturedError)
     }
     
-    func test_whenGenerate_shouldReturnText() {
+    func test_whenGenerate_shouldReturnText() async throws {
         let text = TextResponse(text: "Lorem ipsum tincidunt vitae semper quis lectus.\n")
         let (sut, _) = makeSUT(result: .success(text))
         var capturedText: TextResponse?
         
-        sut.generateLoremIpsum(numberOfParagraphs: 1) { result in
-            switch result {
-            case .success(let success):
-                capturedText = success
-            case .failure:
-                XCTFail("Should be success, error is not an expectation")
-            }
-        }
+        capturedText = try await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
         XCTAssertEqual(capturedText, text)
     }
     
-    func test_whenGenerateWithInvalidParameter_shouldReturnError() {
+    func test_whenGenerateWithInvalidParameter_shouldReturnError() async throws {
         let error: NSError = NSError(domain: "whetever", code: -1)
         let (sut, _) = makeSUT(result: .failure(error))
         var capturedError: ErrorGenerate?
         
-        sut.generateLoremIpsum(numberOfParagraphs: -1) { result in
-            switch result {
-            case .success:
-                XCTFail("Should be error, success is not an expectation")
-            case .failure(let failure):
-                if let myError = failure as? ErrorGenerate {
-                    capturedError = myError
-                } else {
-                    XCTFail("Shouldn't pop up this kind of error, this error is not an expectation")
-                }
+        do {
+            _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
+            XCTFail("Should be error, success is not an expectation")
+        } catch {
+            if let error = error as? ErrorGenerate {
+                capturedError = error
+            } else {
+                XCTFail("Shouldn't pop up this kind of error, this error is not an expectation")
             }
         }
         
@@ -108,8 +97,9 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     final class GenerateLoremIpsumRepositorySpy: GenerateLoremIpsumRepository {
         private(set) var messages = [Message]()
         
-        func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping (Result<TextResponse, Error>) -> Void) {
+        func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
             messages.append(.generateText)
+            return TextResponse(text: "")
         }
         
         enum Message {
@@ -124,8 +114,8 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
             self.result = result
         }
         
-        func generateLoremIpsum(numberOfParagraphs: Int, completion: @escaping (Result<TextResponse, Error>) -> Void) {
-            completion(result)
+        func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
+            try result.get()
         }
     }
 
