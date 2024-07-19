@@ -19,12 +19,34 @@ class RemoteGenerateLoremIpsumRepository: GenerateLoremIpsumRepository {
         if numberOfParagraphs < 0 {
             throw ErrorGenerate.invalidNumberOfParagraphsInput
         }
-        return try await client.get(numberOfParagraphs: numberOfParagraphs)
+        let (data, _) = try await requestClient(numberOfParagraphs)
+        return try decodeData(data)
+    }
+    
+    private func requestClient(_ numberOfParagraphs: Int) async throws -> (Data, URLResponse) {
+        do {
+            return try await client.get(numberOfParagraphs: numberOfParagraphs)
+        } catch {
+            throw RepositoryError.NetworkError
+        }
+    }
+    
+    private func decodeData(_ data: Data) throws -> TextResponse {
+        do {
+            return try JSONDecoder().decode(TextResponse.self, from: data)
+        } catch {
+            throw RepositoryError.ErrorDecoding
+        }
     }
 }
 
+enum RepositoryError: Swift.Error {
+    case NetworkError
+    case ErrorDecoding
+}
+
 protocol HTTPClient {
-    func get(numberOfParagraphs: Int) async throws -> TextResponse
+    func get(numberOfParagraphs: Int) async throws -> (Data, URLResponse)
 }
 
 final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
@@ -53,8 +75,12 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     }
     
     func test_whenGenerate_shouldReturnResponse() async throws {
-        let text = TextResponse(text: "Lorem ipsum tincidunt vitae semper quis lectus.\n")
-        let (sut, client) = makeSUT(result: .success(text))
+        let bundle = Bundle(for: RemoteGenerateLoremIpsumRepositoryTest.self)
+        let jsonData = try! JSONFileLoader.load(fileName: "ThreeParagraphsTextResponse", for: bundle)
+        let (data, response) = (jsonData, URLResponse())
+        let decodedData = try JSONDecoder().decode(TextResponse.self, from: data)
+        let client = HTTPClientStub(result: .success((data, response)))
+        let sut = RemoteGenerateLoremIpsumRepository(client: client)
         var capturedText: TextResponse?
         
         do {
@@ -63,7 +89,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
             XCTFail("Should be success, error is not an expectation")
         }
         
-        XCTAssertEqual(capturedText, text)
+        XCTAssertEqual(capturedText, decodedData)
     }
     
     func test_whenGenerateWithInvalidParameter_shouldReturnError() async throws {
@@ -86,7 +112,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeSUT(result: Result<TextResponse, Error>) -> (sut: RemoteGenerateLoremIpsumRepository, HTTPClientStub) {
+    private func makeSUT(result: Result<(Data, URLResponse), Error>) -> (sut: RemoteGenerateLoremIpsumRepository, HTTPClientStub) {
         let client = HTTPClientStub(result: result)
         let sut = RemoteGenerateLoremIpsumRepository(client: client)
         
@@ -103,9 +129,9 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     final class HTTPClientSpy: HTTPClient {
         private(set) var messages: [Message] = []
         
-        func get(numberOfParagraphs: Int) async throws -> TextResponse {
+        func get(numberOfParagraphs: Int) async throws -> (Data, URLResponse) {
             messages.append(.getRequest)
-            return TextResponse(text: "")
+            return (Data(), URLResponse())
         }
         
         enum Message {
@@ -114,14 +140,33 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     }
     
     final class HTTPClientStub: HTTPClient {
-        private(set) var result: Result<TextResponse, Error>
+        private(set) var result: Result<(Data, URLResponse), Error>
         
-        init(result: Result<TextResponse, Error>) {
+        init(result: Result<(Data, URLResponse), Error>) {
             self.result = result
         }
         
-        func get(numberOfParagraphs: Int) async throws -> TextResponse {
+        func get(numberOfParagraphs: Int) async throws -> (Data, URLResponse) {
             try result.get()
         }
+    }
+    
+    private enum JSONFileLoader {
+        static func load(fileName: String, for bundle: Bundle) throws -> Data {
+            guard let url = bundle.url(forResource: fileName, withExtension: "json") else {
+                throw JSONFileLoaderError.FileNotFound
+            }
+            
+            do {
+                return try Data(contentsOf: url)
+            } catch {
+                throw JSONFileLoaderError.CannotDecodeFromURL
+            }
+        }
+    }
+    
+    enum JSONFileLoaderError: Swift.Error {
+        case CannotDecodeFromURL
+        case FileNotFound
     }
 }

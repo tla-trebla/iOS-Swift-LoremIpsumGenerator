@@ -5,7 +5,7 @@
 //  Created by Albert Pangestu on 19/07/24.
 //
 
-struct TextResponse: Equatable {
+struct TextResponse: Decodable, Equatable {
     let text: String
     
     var paragraphs: [String] {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E6A8AE22C4AE47C0003DCFD /* ThreeParagraphsTextResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5E6A8AE12C4AE47C0003DCFD /* ThreeParagraphsTextResponse.json */; };
 		5E82DE242C4A2D1A005ABE94 /* GenerateLoremIpsumUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E82DE232C4A2D1A005ABE94 /* GenerateLoremIpsumUseCase.swift */; };
 		5E82DE272C4A2D4D005ABE94 /* GenerateLoremIpsumRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E82DE262C4A2D4D005ABE94 /* GenerateLoremIpsumRepositoryInterface.swift */; };
 		5E82DE2A2C4A2D72005ABE94 /* TextResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E82DE292C4A2D72005ABE94 /* TextResponse.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5E6A8AE12C4AE47C0003DCFD /* ThreeParagraphsTextResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ThreeParagraphsTextResponse.json; sourceTree = "<group>"; };
 		5E82DE232C4A2D1A005ABE94 /* GenerateLoremIpsumUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateLoremIpsumUseCase.swift; sourceTree = "<group>"; };
 		5E82DE262C4A2D4D005ABE94 /* GenerateLoremIpsumRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateLoremIpsumRepositoryInterface.swift; sourceTree = "<group>"; };
 		5E82DE292C4A2D72005ABE94 /* TextResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextResponse.swift; sourceTree = "<group>"; };
@@ -54,6 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E6A8AE02C4AE45B0003DCFD /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5E6A8AE12C4AE47C0003DCFD /* ThreeParagraphsTextResponse.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		5E82DE212C4A2CD5005ABE94 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +135,7 @@
 		5EF2FFF52C493EB8009CBF40 /* LoremIpsumGeneratorTests */ = {
 			isa = PBXGroup;
 			children = (
+				5E6A8AE02C4AE45B0003DCFD /* Data */,
 				5E82DE2B2C4A2F44005ABE94 /* Repository */,
 				5E82DE212C4A2CD5005ABE94 /* UseCase */,
 			);
@@ -231,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E6A8AE22C4AE47C0003DCFD /* ThreeParagraphsTextResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
