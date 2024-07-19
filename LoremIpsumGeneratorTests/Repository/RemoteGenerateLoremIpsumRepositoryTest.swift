@@ -32,7 +32,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     func test_whenInitialized_shouldNotRequest() {
         let (_, client) = makeSUT()
         
-        XCTAssertEqual(client.requestCount, 0)
+        XCTAssertEqual(client.messages, [])
     }
     
     func test_whenGenerate_shouldCount() async {
@@ -40,7 +40,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
-        XCTAssertEqual(client.requestCount, 1)
+        XCTAssertEqual(client.messages, [.getRequest])
     }
     
     func test_whenGenerateMoreThanOne_shouldCountMoreThanOne() async {
@@ -49,7 +49,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
-        XCTAssertEqual(client.requestCount, 2)
+        XCTAssertEqual(client.messages, [.getRequest, .getRequest])
     }
     
     func test_whenGenerate_shouldReturnResponse() async throws {
@@ -101,11 +101,15 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     }
     
     final class HTTPClientSpy: HTTPClient {
-        private(set) var requestCount: Int = 0
+        private(set) var messages: [Message] = []
         
         func get(numberOfParagraphs: Int) async throws -> TextResponse {
-            requestCount += 1
+            messages.append(.getRequest)
             return TextResponse(text: "")
+        }
+        
+        enum Message {
+            case getRequest
         }
     }
     
