@@ -35,7 +35,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     func test_initiate_useCaseShouldNotRequest() {
         let (_, useCase) = makeSUT()
         
-        XCTAssertEqual(useCase.requestCount, 0)
+        XCTAssertEqual(useCase.messages, [])
     }
     
     func test_generate_useCaseShouldRequest() async {
@@ -43,7 +43,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
-        XCTAssertEqual(useCase.requestCount, 1)
+        XCTAssertEqual(useCase.messages, [.generateText])
     }
     
     func test_generateMoreThanOne_useCaseShouldRequestMoreThanOne() async {
@@ -52,7 +52,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
-        XCTAssertEqual(useCase.requestCount, 2)
+        XCTAssertEqual(useCase.messages, [.generateText, .generateText])
     }
     
     // MARK: - Helper
@@ -64,13 +64,17 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     }
     
     final class GenerateLoremIpsumUseCaseSpy: GenerateLoremIpsumUseCase {
-        private(set) var requestCount: Int = 0
+        private(set) var messages: [Message] = []
         
         func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
-            requestCount += 1
+            messages.append(.generateText)
             let data = """
 """.data(using: .utf8)!
             return try JSONDecoder().decode(TextResponse.self, from: data)
+        }
+        
+        enum Message {
+            case generateText
         }
     }
 }
