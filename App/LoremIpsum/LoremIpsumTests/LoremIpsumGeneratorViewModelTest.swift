@@ -17,6 +17,10 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
     init(useCase: GenerateLoremIpsumUseCase) {
         self.useCase = useCase
     }
+    
+    func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
+        try await useCase.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs)
+    }
 }
 
 final class LoremIpsumGeneratorViewModelTest: XCTestCase {
@@ -36,11 +40,21 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         XCTAssertEqual(useCase.requestCount, 0)
     }
     
+    func test_generate_useCaseShouldRequest() async {
+        let useCase = GenerateLoremIpsumUseCaseSpy()
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        
+        _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        
+        XCTAssertEqual(useCase.requestCount, 1)
+    }
+    
     // MARK: - Helper
     final class GenerateLoremIpsumUseCaseSpy: GenerateLoremIpsumUseCase {
-        let requestCount: Int = 0
+        private(set) var requestCount: Int = 0
         
         func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
+            requestCount = 1
             let data = """
 """.data(using: .utf8)!
             return try JSONDecoder().decode(TextResponse.self, from: data)
