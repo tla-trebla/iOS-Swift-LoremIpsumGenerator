@@ -16,7 +16,7 @@ final class RemoteGenerateLoremIpsumRepository: GenerateLoremIpsumRepository {
     
     func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
         if numberOfParagraphs < 0 {
-            throw RepositoryError.InvalidParameter
+            throw GeneralError.InvalidParameter
         }
         let (data, _) = try await requestClient(numberOfParagraphs)
         return try decodeData(data)
@@ -26,7 +26,7 @@ final class RemoteGenerateLoremIpsumRepository: GenerateLoremIpsumRepository {
         do {
             return try await client.get(numberOfParagraphs: numberOfParagraphs)
         } catch {
-            throw RepositoryError.NetworkError
+            throw GeneralError.NetworkError
         }
     }
     
@@ -34,14 +34,8 @@ final class RemoteGenerateLoremIpsumRepository: GenerateLoremIpsumRepository {
         do {
             return try JSONDecoder().decode(TextResponse.self, from: data)
         } catch {
-            throw RepositoryError.ErrorDecoding
+            throw GeneralError.ErrorDecoding
         }
-    }
-    
-    enum RepositoryError: Swift.Error {
-        case InvalidParameter
-        case NetworkError
-        case ErrorDecoding
     }
 }
 

@@ -14,12 +14,8 @@ final class RemoteGenerateLoremIpsumUseCase {
     
     func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
         if numberOfParagraphs < 0 {
-            throw ErrorGenerate.invalidNumberOfParagraphsInput
+            throw GeneralError.InvalidParameter
         }
         return try await repository.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs)
     }
-}
-
-enum ErrorGenerate: Error {
-    case invalidNumberOfParagraphsInput
 }

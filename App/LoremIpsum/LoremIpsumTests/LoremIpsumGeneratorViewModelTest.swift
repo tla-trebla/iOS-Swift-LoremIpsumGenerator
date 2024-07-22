@@ -23,7 +23,16 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
         do {
             return try await useCase.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs)
         } catch {
-            errorMessage = "Error occured, please try again."
+            switch error as? GeneralError {
+            case .ErrorDecoding:
+                errorMessage = "Failed to decode the result. Please try again."
+            case .InvalidParameter:
+                errorMessage = "Number of paragraphs should be more than 0."
+            case .NetworkError:
+                errorMessage = "Network error, please try again."
+            case .none:
+                errorMessage = "Error occured, please try again."
+            }
             throw error
         }
     }
@@ -68,9 +77,34 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         
         do {
             _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
-            XCTFail("Expected failure, a success is not an expectation ")
+            XCTFail("Expected failure, a success is not an expectation")
         } catch {
             XCTAssertEqual(sut.errorMessage, "Error occured, please try again.")
+        }
+    }
+    
+    func test_generateReceivedGeneralErrors_handleEachGeneralErrorMessage() async throws {
+        let expectedErrors: [GeneralError] = [.ErrorDecoding, .InvalidParameter, .NetworkError]
+        
+        for capturedError in expectedErrors {
+            let useCase = GenerateLoremIpsumUseCaseStub(result: .failure(capturedError))
+            let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+            
+            do {
+                _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
+                XCTFail("Expected an error, success is not an expectation")
+            } catch {
+                switch error as? GeneralError {
+                case .ErrorDecoding:
+                    XCTAssertEqual(sut.errorMessage, "Failed to decode the result. Please try again.")
+                case .InvalidParameter:
+                    XCTAssertEqual(sut.errorMessage, "Number of paragraphs should be more than 0.")
+                case .NetworkError:
+                    XCTAssertEqual(sut.errorMessage, "Network error, please try again.")
+                case .none:
+                    XCTAssertEqual(sut.errorMessage, "Error occured, please try again.")
+                }
+            }
         }
     }
     
