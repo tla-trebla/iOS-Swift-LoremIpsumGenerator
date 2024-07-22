@@ -1,11 +1,11 @@
 //
-//  GenerateLoremIpsumUseCase.swift
+//  RemoteGenerateLoremIpsumUseCase.swift
 //
 //
 //  Created by Albert Pangestu on 21/07/24.
 //
 
-final class GenerateLoremIpsumUseCase {
+final class RemoteGenerateLoremIpsumUseCase {
     let repository: GenerateLoremIpsumRepository
     
     init(repository: GenerateLoremIpsumRepository) {

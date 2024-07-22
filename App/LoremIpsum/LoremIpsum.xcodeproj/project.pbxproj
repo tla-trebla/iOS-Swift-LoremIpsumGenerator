@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		5EA445F32C4C32A500315F14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA445F22C4C32A500315F14 /* Assets.xcassets */; };
 		5EA445F62C4C32A500315F14 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA445F52C4C32A500315F14 /* Preview Assets.xcassets */; };
 		5EA4461D2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA4461C2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift */; };
+		5EB8E6582C4D9F100051D51E /* LoremIpsumLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5EB8E6572C4D9F100051D51E /* LoremIpsumLib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EB8E6582C4D9F100051D51E /* LoremIpsumLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +60,7 @@
 				5EA445ED2C4C32A300315F14 /* LoremIpsum */,
 				5EA445FE2C4C32A600315F14 /* LoremIpsumTests */,
 				5EA445EC2C4C32A300315F14 /* Products */,
+				5EB8E6592C4DA00A0051D51E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,6 +99,13 @@
 			path = LoremIpsumTests;
 			sourceTree = "<group>";
 		};
+		5EB8E6592C4DA00A0051D51E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -112,6 +122,8 @@
 			dependencies = (
 			);
 			name = LoremIpsum;
+			packageProductDependencies = (
+			);
 			productName = LoremIpsum;
 			productReference = 5EA445EB2C4C32A300315F14 /* LoremIpsum.app */;
 			productType = "com.apple.product-type.application";
@@ -130,6 +142,9 @@
 				5EA445FD2C4C32A600315F14 /* PBXTargetDependency */,
 			);
 			name = LoremIpsumTests;
+			packageProductDependencies = (
+				5EB8E6572C4D9F100051D51E /* LoremIpsumLib */,
+			);
 			productName = LoremIpsumTests;
 			productReference = 5EA445FB2C4C32A600315F14 /* LoremIpsumTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -163,6 +178,9 @@
 				Base,
 			);
 			mainGroup = 5EA445E22C4C32A300315F14;
+			packageReferences = (
+				5EB8E6562C4D9F100051D51E /* XCLocalSwiftPackageReference "../../LoremIpsumLib" */,
+			);
 			productRefGroup = 5EA445EC2C4C32A300315F14 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -471,6 +489,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		5EB8E6562C4D9F100051D51E /* XCLocalSwiftPackageReference "../../LoremIpsumLib" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../LoremIpsumLib;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5EB8E6572C4D9F100051D51E /* LoremIpsumLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoremIpsumLib;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5EA445E32C4C32A300315F14 /* Project object */;
 }

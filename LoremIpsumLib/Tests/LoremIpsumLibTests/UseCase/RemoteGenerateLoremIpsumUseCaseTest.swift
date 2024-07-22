@@ -1,5 +1,5 @@
 //
-//  GenerateLoremIpsumUseCaseTest.swift
+//  RemoteGenerateLoremIpsumUseCaseTest.swift
 //  
 //
 //  Created by Albert Pangestu on 21/07/24.
@@ -8,7 +8,7 @@
 @testable import LoremIpsumLib
 import XCTest
 
-final class GenerateLoremIpsumUseCaseTest: XCTestCase {
+final class RemoteGenerateLoremIpsumUseCaseTest: XCTestCase {
 
     func test_whenInitialize_shouldNotGenerate() {
         let (_, repository) = makeSUT()
@@ -80,16 +80,16 @@ final class GenerateLoremIpsumUseCaseTest: XCTestCase {
     
     // MARK: - Helper
     
-    func makeSUT(result: Result<TextResponse, Error>) -> (sut: GenerateLoremIpsumUseCase, GenerateLoremIpsumRepositoryStub) {
+    func makeSUT(result: Result<TextResponse, Error>) -> (sut: RemoteGenerateLoremIpsumUseCase, GenerateLoremIpsumRepositoryStub) {
         let repository = GenerateLoremIpsumRepositoryStub(result: result)
-        let sut = GenerateLoremIpsumUseCase(repository: repository)
+        let sut = RemoteGenerateLoremIpsumUseCase(repository: repository)
         
         return (sut, repository)
     }
     
-    private func makeSUT() -> (sut: GenerateLoremIpsumUseCase, GenerateLoremIpsumRepositorySpy) {
+    private func makeSUT() -> (sut: RemoteGenerateLoremIpsumUseCase, GenerateLoremIpsumRepositorySpy) {
         let repository = GenerateLoremIpsumRepositorySpy()
-        let sut = GenerateLoremIpsumUseCase(repository: repository)
+        let sut = RemoteGenerateLoremIpsumUseCase(repository: repository)
         
         return (sut, repository)
     }
