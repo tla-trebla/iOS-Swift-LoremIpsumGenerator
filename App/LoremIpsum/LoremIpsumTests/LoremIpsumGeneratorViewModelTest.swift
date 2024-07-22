@@ -49,12 +49,22 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         XCTAssertEqual(useCase.requestCount, 1)
     }
     
+    func test_generateMoreThanOne_useCaseShouldRequestMoreThanOne() async {
+        let useCase = GenerateLoremIpsumUseCaseSpy()
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        
+        _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        
+        XCTAssertEqual(useCase.requestCount, 2)
+    }
+    
     // MARK: - Helper
     final class GenerateLoremIpsumUseCaseSpy: GenerateLoremIpsumUseCase {
         private(set) var requestCount: Int = 0
         
         func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
-            requestCount = 1
+            requestCount += 1
             let data = """
 """.data(using: .utf8)!
             return try JSONDecoder().decode(TextResponse.self, from: data)
