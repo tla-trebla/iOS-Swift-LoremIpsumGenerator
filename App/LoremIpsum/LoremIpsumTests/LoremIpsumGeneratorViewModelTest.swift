@@ -26,23 +26,20 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
 final class LoremIpsumGeneratorViewModelTest: XCTestCase {
 
     func test_initiate_textFieldShouldEmpty() {
-        let useCase = GenerateLoremIpsumUseCaseSpy()
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        let (sut, _) = makeSUT()
         
         XCTAssertEqual(sut.inputText, "")
         XCTAssertEqual(sut.generatedText, "")
     }
     
     func test_initiate_useCaseShouldNotRequest() {
-        let useCase = GenerateLoremIpsumUseCaseSpy()
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        let (_, useCase) = makeSUT()
         
         XCTAssertEqual(useCase.requestCount, 0)
     }
     
     func test_generate_useCaseShouldRequest() async {
-        let useCase = GenerateLoremIpsumUseCaseSpy()
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        let (sut, useCase) = makeSUT()
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
@@ -50,8 +47,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     }
     
     func test_generateMoreThanOne_useCaseShouldRequestMoreThanOne() async {
-        let useCase = GenerateLoremIpsumUseCaseSpy()
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        let (sut, useCase) = makeSUT()
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
@@ -60,6 +56,13 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     }
     
     // MARK: - Helper
+    private func makeSUT() -> (sut: LoremIpsumGeneratorViewModel, GenerateLoremIpsumUseCaseSpy) {
+        let useCase = GenerateLoremIpsumUseCaseSpy()
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        
+        return (sut, useCase)
+    }
+    
     final class GenerateLoremIpsumUseCaseSpy: GenerateLoremIpsumUseCase {
         private(set) var requestCount: Int = 0
         
