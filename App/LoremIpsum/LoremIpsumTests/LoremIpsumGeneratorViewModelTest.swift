@@ -11,6 +11,7 @@ import LoremIpsumLib
 final class LoremIpsumGeneratorViewModel: ObservableObject {
     @Published var inputText: String = ""
     @Published var generatedText: String = ""
+    @Published var errorMessage: String?
     
     private let useCase: GenerateLoremIpsumUseCase
     
@@ -19,7 +20,12 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
     }
     
     func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
-        try await useCase.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs)
+        do {
+            return try await useCase.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs)
+        } catch {
+            errorMessage = "Error occured, please try again."
+            throw error
+        }
     }
 }
 
@@ -55,6 +61,19 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         XCTAssertEqual(useCase.messages, [.generateText, .generateText])
     }
     
+    func test_generateReceivedError_handleErrorMessage() async throws {
+        let error = NSError(domain: "Whatever", code: 10)
+        let useCase = GenerateLoremIpsumUseCaseStub(result: .failure(error))
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        
+        do {
+            _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
+            XCTFail("Expected failure, a success is not an expectation ")
+        } catch {
+            XCTAssertEqual(sut.errorMessage, "Error occured, please try again.")
+        }
+    }
+    
     // MARK: - Helper
     private func makeSUT() -> (sut: LoremIpsumGeneratorViewModel, GenerateLoremIpsumUseCaseSpy) {
         let useCase = GenerateLoremIpsumUseCaseSpy()
@@ -75,6 +94,18 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         
         enum Message {
             case generateText
+        }
+    }
+    
+    final class GenerateLoremIpsumUseCaseStub: GenerateLoremIpsumUseCase {
+        let result: Result<TextResponse, Error>
+        
+        init(result: Result<TextResponse, Error>) {
+            self.result = result
+        }
+        
+        func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
+            return try result.get()
         }
     }
 }
