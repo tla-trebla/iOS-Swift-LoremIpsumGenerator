@@ -9,7 +9,6 @@ import XCTest
 import LoremIpsumLib
 
 final class LoremIpsumGeneratorViewModel: ObservableObject {
-    @Published var inputText: String = ""
     @Published var generatedText: String = ""
     @Published var errorMessage: String?
     
@@ -19,9 +18,10 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
         self.useCase = useCase
     }
     
-    func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
+    func generateLoremIpsum(numberOfParagraphs: Int) async throws {
         do {
-            return try await useCase.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs)
+            let response = try await useCase.generateLoremIpsum(numberOfParagraphs: numberOfParagraphs)
+            generatedText = response.text
         } catch {
             switch error as? GeneralError {
             case .ErrorDecoding:
@@ -40,10 +40,9 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
 
 final class LoremIpsumGeneratorViewModelTest: XCTestCase {
 
-    func test_initiate_textFieldShouldEmpty() {
+    func test_initiate_generatedTextShouldEmpty() {
         let (sut, _) = makeSUT()
         
-        XCTAssertEqual(sut.inputText, "")
         XCTAssertEqual(sut.generatedText, "")
     }
     
@@ -106,6 +105,21 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         }
     }
     
+    func test_generate_generatedTextShouldAvailable() async {
+        let data = try! JSONFileLoader.load(fileName: "OneParagraphTextResponse")
+        let textResponse = try! JSONDecoder().decode(TextResponse.self, from: data)
+        let (sut, _) = makeSUT(result: .success(textResponse))
+        
+        do {
+            _ = try await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        } catch {
+            XCTFail("Should be success, any error is not an expectation.")
+        }
+        
+        XCTAssertEqual(sut.errorMessage, nil)
+        XCTAssertEqual(sut.generatedText, textResponse.text)
+    }
+    
     // MARK: - Helper
     private func makeSUT(result: Result<TextResponse, Error>) -> (sut: LoremIpsumGeneratorViewModel, GenerateLoremIpsumUseCaseStub) {
         let useCase = GenerateLoremIpsumUseCaseStub(result: result)
@@ -145,6 +159,25 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         
         func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
             return try result.get()
+        }
+    }
+    
+    private enum JSONFileLoader {
+        static func load(fileName: String) throws -> Data {
+            guard let url = Bundle(for: LoremIpsumGeneratorViewModelTest.self).url(forResource: fileName, withExtension: "json") else {
+                throw JSONFileLoaderError.FileNotFound
+            }
+            
+            do {
+                return try Data(contentsOf: url)
+            } catch {
+                throw JSONFileLoaderError.InvalidData
+            }
+        }
+        
+        enum JSONFileLoaderError: Swift.Error {
+            case FileNotFound
+            case InvalidData
         }
     }
 }

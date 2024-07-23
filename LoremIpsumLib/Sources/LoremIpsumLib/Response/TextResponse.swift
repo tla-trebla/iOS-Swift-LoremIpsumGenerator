@@ -6,7 +6,7 @@
 //
 
 public struct TextResponse: Decodable, Equatable {
-    let text: String
+    public let text: String
     
     var paragraphs: [String] {
         text.split(separator: "\n").map(String.init)
