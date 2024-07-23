@@ -36,6 +36,10 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
             throw error
         }
     }
+    
+    func copyGeneratedText() {
+        UIPasteboard.general.string = generatedText
+    }
 }
 
 final class LoremIpsumGeneratorViewModelTest: XCTestCase {
@@ -118,6 +122,18 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         
         XCTAssertEqual(sut.errorMessage, nil)
         XCTAssertEqual(sut.generatedText, textResponse.text)
+    }
+    
+    func test_copy_generatedTextCopied() async {
+        let data = try! JSONFileLoader.load(fileName: "OneParagraphTextResponse")
+        let textResponse = try! JSONDecoder().decode(TextResponse.self, from: data)
+        let (sut, _) = makeSUT(result: .success(textResponse))
+        _ = try! await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        
+        sut.copyGeneratedText()
+        
+        XCTAssertEqual(sut.errorMessage, nil)
+        XCTAssertEqual(UIPasteboard.general.string, textResponse.text)
     }
     
     // MARK: - Helper
