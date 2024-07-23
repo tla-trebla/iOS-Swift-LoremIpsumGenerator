@@ -71,7 +71,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     
     func test_generateReceivedError_handleErrorMessage() async throws {
         let error = NSError(domain: "Whatever", code: 10)
-        let (sut, useCase) = makeSUT(result: .failure(error))
+        let (sut, _) = makeSUT(result: .failure(error))
         
         do {
             _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
@@ -85,7 +85,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         let expectedErrors: [GeneralError] = [.ErrorDecoding, .InvalidParameter, .NetworkError]
         
         for capturedError in expectedErrors {
-            let (sut, useCase) = makeSUT(result: .failure(capturedError))
+            let (sut, _) = makeSUT(result: .failure(capturedError))
             
             do {
                 _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
