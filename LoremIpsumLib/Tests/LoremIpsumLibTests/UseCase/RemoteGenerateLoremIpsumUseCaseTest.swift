@@ -61,20 +61,20 @@ final class RemoteGenerateLoremIpsumUseCaseTest: XCTestCase {
     func test_whenGenerateWithInvalidParameter_shouldReturnError() async throws {
         let error: NSError = NSError(domain: "whetever", code: -1)
         let (sut, _) = makeSUT(result: .failure(error))
-        var capturedError: ErrorGenerate?
+        var capturedError: GeneralError?
         
         do {
             _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
             XCTFail("Should be error, success is not an expectation")
         } catch {
-            if let error = error as? ErrorGenerate {
+            if let error = error as? GeneralError {
                 capturedError = error
             } else {
                 XCTFail("Shouldn't pop up this kind of error, this error is not an expectation")
             }
         }
         
-        XCTAssertEqual(capturedError, .invalidNumberOfParagraphsInput)
+        XCTAssertEqual(capturedError, .InvalidParameter)
 
     }
     

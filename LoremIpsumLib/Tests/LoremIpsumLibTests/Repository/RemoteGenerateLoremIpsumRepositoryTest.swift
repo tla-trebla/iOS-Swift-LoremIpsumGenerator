@@ -53,20 +53,20 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     func test_whenGenerateWithInvalidParameter_shouldReturnError() async throws {
         let error = NSError(domain: "Whatever", code: -1)
         let (sut, _) = makeSUT(result: .failure(error))
-        var capturedError: RemoteGenerateLoremIpsumRepository.RepositoryError?
+        var capturedError: GeneralError?
         
         do {
             _ = try await sut.generateLoremIpsum(numberOfParagraphs: -1)
             XCTFail("Should showing error, success is not an expectation")
         } catch {
-            if let error = error as? RemoteGenerateLoremIpsumRepository.RepositoryError {
+            if let error = error as? GeneralError {
                 capturedError = error
             } else {
                 XCTFail("Should showing the custom error, unknown error is not an expectation")
             }
         }
         
-        XCTAssertEqual(capturedError, RemoteGenerateLoremIpsumRepository.RepositoryError.InvalidParameter)
+        XCTAssertEqual(capturedError, GeneralError.InvalidParameter)
     }
     
     // MARK: - Helpers
