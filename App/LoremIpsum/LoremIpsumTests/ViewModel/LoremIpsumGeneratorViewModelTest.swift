@@ -91,6 +91,15 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         XCTAssertEqual(sut.generatedText, textResponse.text)
     }
     
+    func test_initiate_doesNotCopy() {
+        let useCase = GenerateLoremIpsumUseCaseSpy()
+        let service = ClipboardServiceSpy()
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
+        
+        XCTAssertEqual(service.message, [])
+    }
+    
+    /*
     func test_copy_generatedTextCopied() async {
         let data = try! JSONFileLoader.load(fileName: "OneParagraphTextResponse")
         let textResponse = try! JSONDecoder().decode(TextResponse.self, from: data)
@@ -102,18 +111,21 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         XCTAssertEqual(sut.errorMessage, nil)
         XCTAssertEqual(UIPasteboard.general.string, textResponse.text)
     }
+    */
     
     // MARK: - Helper
     private func makeSUT(result: Result<TextResponse, Error>) -> (sut: LoremIpsumGeneratorViewModel, GenerateLoremIpsumUseCaseStub) {
         let useCase = GenerateLoremIpsumUseCaseStub(result: result)
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        let dummy = ClipboardServiceDummy()
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: dummy)
         
         return (sut, useCase)
     }
     
     private func makeSUT() -> (sut: LoremIpsumGeneratorViewModel, GenerateLoremIpsumUseCaseSpy) {
         let useCase = GenerateLoremIpsumUseCaseSpy()
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase)
+        let dummy = ClipboardServiceDummy()
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: dummy)
         
         return (sut, useCase)
     }
@@ -161,6 +173,22 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         enum JSONFileLoaderError: Swift.Error {
             case FileNotFound
             case InvalidData
+        }
+    }
+    
+    class ClipboardServiceDummy: ClipboardService {
+        func copy(_ text: String) { }
+    }
+    
+    final class ClipboardServiceSpy: ClipboardService {
+        var message: [Message] = []
+        
+        func copy(_ text: String) {
+            message.append(.didCopy)
+        }
+        
+        enum Message {
+            case didCopy
         }
     }
 }

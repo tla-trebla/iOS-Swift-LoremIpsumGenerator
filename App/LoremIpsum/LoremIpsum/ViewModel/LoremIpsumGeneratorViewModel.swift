@@ -13,9 +13,11 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private let useCase: GenerateLoremIpsumUseCase
+    private let clipboardService: ClipboardService
     
-    init(useCase: GenerateLoremIpsumUseCase) {
+    init(useCase: GenerateLoremIpsumUseCase, clipboardService: ClipboardService) {
         self.useCase = useCase
+        self.clipboardService = clipboardService
     }
     
     func generateLoremIpsum(numberOfParagraphs: Int) async throws {
@@ -38,6 +40,16 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
     }
     
     func copyGeneratedText() {
-        UIPasteboard.general.string = generatedText
+        clipboardService.copy(generatedText)
+    }
+}
+
+protocol ClipboardService {
+    func copy(_ text: String)
+}
+
+final class UIKitClipboardService: ClipboardService {
+    func copy(_ text: String) {
+        UIPasteboard.general.string = text
     }
 }
