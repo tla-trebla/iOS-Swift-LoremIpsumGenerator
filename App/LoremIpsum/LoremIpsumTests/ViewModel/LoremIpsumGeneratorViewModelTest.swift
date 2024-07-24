@@ -69,6 +69,8 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
                     XCTAssertEqual(sut.errorMessage, "Number of paragraphs should be more than 0.")
                 case .NetworkError:
                     XCTAssertEqual(sut.errorMessage, "Network error, please try again.")
+                case .InvalidURL:
+                    XCTAssertEqual(sut.errorMessage, "Invalid URL. Please contact to the developer.")
                 case .none:
                     XCTAssertEqual(sut.errorMessage, "Error occured, please try again.")
                 }

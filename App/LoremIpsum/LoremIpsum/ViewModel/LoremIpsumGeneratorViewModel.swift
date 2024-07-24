@@ -32,6 +32,8 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
                 errorMessage = "Number of paragraphs should be more than 0."
             case .NetworkError:
                 errorMessage = "Network error, please try again."
+            case .InvalidURL:
+                errorMessage = "Invalid URL. Please contact to the developer."
             case .none:
                 errorMessage = "Error occured, please try again."
             }

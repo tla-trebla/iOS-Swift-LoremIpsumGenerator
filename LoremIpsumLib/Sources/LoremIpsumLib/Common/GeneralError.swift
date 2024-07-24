@@ -9,4 +9,5 @@ public enum GeneralError: Swift.Error {
     case InvalidParameter
     case NetworkError
     case ErrorDecoding
+    case InvalidURL
 }

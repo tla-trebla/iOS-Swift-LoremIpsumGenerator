@@ -24,7 +24,8 @@ final class RemoteGenerateLoremIpsumRepository: GenerateLoremIpsumRepository {
     
     private func requestClient(_ numberOfParagraphs: Int) async throws -> (Data, URLResponse) {
         do {
-            return try await client.get(numberOfParagraphs: numberOfParagraphs)
+            return try await client.get(with: URL(string: "https://api.api-ninjas.com/v1/loremipsum")!,
+                                        numberOfParagraphs: numberOfParagraphs)
         } catch {
             throw GeneralError.NetworkError
         }

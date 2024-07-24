@@ -87,7 +87,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
     final class HTTPClientSpy: HTTPClient {
         private(set) var messages: [Message] = []
         
-        func get(numberOfParagraphs: Int) async throws -> (Data, URLResponse) {
+        func get(with url: URL, numberOfParagraphs: Int) async throws -> (Data, URLResponse) {
             messages.append(.getRequest)
             return (Data(), URLResponse())
         }
@@ -104,7 +104,7 @@ final class RemoteGenerateLoremIpsumRepositoryTest: XCTestCase {
             self.result = result
         }
         
-        func get(numberOfParagraphs: Int) async throws -> (Data, URLResponse) {
+        func get(with url: URL, numberOfParagraphs: Int) async throws -> (Data, URLResponse) {
             try result.get()
         }
     }
