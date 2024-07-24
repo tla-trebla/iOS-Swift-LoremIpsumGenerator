@@ -133,19 +133,19 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         XCTAssertEqual(service.message, [.didCopy, .didCopy])
     }
     
-    /*
     func test_copy_generatedTextCopied() async {
         let data = try! JSONFileLoader.load(fileName: "OneParagraphTextResponse")
         let textResponse = try! JSONDecoder().decode(TextResponse.self, from: data)
-        let (sut, _) = makeSUT(result: .success(textResponse))
+        let useCase = GenerateLoremIpsumUseCaseStub(result: .success(textResponse))
+        let service = ClipboardServiceStub()
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
         _ = try! await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
         sut.copyGeneratedText()
         
         XCTAssertEqual(sut.errorMessage, nil)
-        XCTAssertEqual(UIPasteboard.general.string, textResponse.text)
+        XCTAssertEqual(service.copiedText, textResponse.text)
     }
-    */
     
     // MARK: - Helper
     private func makeSUTClipboard() -> (sut: LoremIpsumGeneratorViewModel, ClipboardServiceSpy) {
@@ -231,6 +231,14 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         
         enum Message {
             case didCopy
+        }
+    }
+    
+    final class ClipboardServiceStub: ClipboardService {
+        var copiedText: String?
+        
+        func copy(_ text: String) {
+            copiedText = text
         }
     }
 }
