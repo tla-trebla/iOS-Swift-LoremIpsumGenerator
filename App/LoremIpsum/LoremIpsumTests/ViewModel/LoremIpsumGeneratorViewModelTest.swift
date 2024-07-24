@@ -92,17 +92,13 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     }
     
     func test_initiate_doesNotCopy() {
-        let useCase = GenerateLoremIpsumUseCaseSpy()
-        let service = ClipboardServiceSpy()
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
+        let (_, service) = makeSUTClipboard()
         
         XCTAssertEqual(service.message, [])
     }
     
     func test_copyEmptyGeneratedText_doesNotCopy() async {
-        let useCase = GenerateLoremIpsumUseCaseSpy()
-        let service = ClipboardServiceSpy()
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
+        let (sut, service) = makeSUTClipboard()
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         sut.copyGeneratedText()
@@ -152,6 +148,14 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     */
     
     // MARK: - Helper
+    private func makeSUTClipboard() -> (sut: LoremIpsumGeneratorViewModel, ClipboardServiceSpy) {
+        let useCase = GenerateLoremIpsumUseCaseSpy()
+        let service = ClipboardServiceSpy()
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
+        
+        return (sut, service)
+    }
+    
     private func makeSUT(result: Result<TextResponse, Error>) -> (sut: LoremIpsumGeneratorViewModel, GenerateLoremIpsumUseCaseStub) {
         let useCase = GenerateLoremIpsumUseCaseStub(result: result)
         let dummy = ClipboardServiceDummy()
