@@ -123,6 +123,20 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         XCTAssertEqual(service.message, [.didCopy])
     }
     
+    func test_copyGeneratedTextMoreThanOne_itShouldCopyMoreThanOne() async {
+        let data = try! JSONFileLoader.load(fileName: "OneParagraphTextResponse")
+        let textResponse = try! JSONDecoder().decode(TextResponse.self, from: data)
+        let useCase = GenerateLoremIpsumUseCaseStub(result: .success(textResponse))
+        let service = ClipboardServiceSpy()
+        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
+        
+        _ = try! await sut.generateLoremIpsum(numberOfParagraphs: 1)
+        sut.copyGeneratedText()
+        sut.copyGeneratedText()
+        
+        XCTAssertEqual(service.message, [.didCopy, .didCopy])
+    }
+    
     /*
     func test_copy_generatedTextCopied() async {
         let data = try! JSONFileLoader.load(fileName: "OneParagraphTextResponse")
