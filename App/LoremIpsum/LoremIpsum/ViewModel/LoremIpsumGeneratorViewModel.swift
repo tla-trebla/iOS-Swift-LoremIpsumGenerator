@@ -40,6 +40,7 @@ final class LoremIpsumGeneratorViewModel: ObservableObject {
     }
     
     func copyGeneratedText() {
+        guard generatedText != "" else { return }
         clipboardService.copy(generatedText)
     }
 }
