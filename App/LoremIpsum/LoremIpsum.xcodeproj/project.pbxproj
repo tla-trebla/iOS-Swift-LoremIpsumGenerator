@@ -69,6 +69,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		5E27FF9F2C5176E200507D59 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				5EA445EE2C4C32A300315F14 /* LoremIpsumApp.swift */,
+				5EA445F22C4C32A500315F14 /* Assets.xcassets */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		5E73CEE02C501A3C0088870F /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,9 +125,8 @@
 		5EA445ED2C4C32A300315F14 /* LoremIpsum */ = {
 			isa = PBXGroup;
 			children = (
-				5EA445EE2C4C32A300315F14 /* LoremIpsumApp.swift */,
+				5E27FF9F2C5176E200507D59 /* Main */,
 				5E27FF9E2C513D8800507D59 /* ViewModel */,
-				5EA445F22C4C32A500315F14 /* Assets.xcassets */,
 				5EA445F42C4C32A500315F14 /* Preview Content */,
 			);
 			path = LoremIpsum;
