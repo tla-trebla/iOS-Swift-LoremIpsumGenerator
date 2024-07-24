@@ -10,6 +10,7 @@
 		5E73CEDB2C500BF30088870F /* OneParagraphTextResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5E73CEDA2C500BF30088870F /* OneParagraphTextResponse.json */; };
 		5E73CEDD2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E73CEDC2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift */; };
 		5E73CEDF2C5016040088870F /* LoremIpsumLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5E73CEDE2C5016040088870F /* LoremIpsumLib */; };
+		5E73CEE42C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E73CEE32C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift */; };
 		5EA445EF2C4C32A300315F14 /* LoremIpsumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA445EE2C4C32A300315F14 /* LoremIpsumApp.swift */; };
 		5EA445F32C4C32A500315F14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA445F22C4C32A500315F14 /* Assets.xcassets */; };
 		5EA445F62C4C32A500315F14 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA445F52C4C32A500315F14 /* Preview Assets.xcassets */; };
@@ -31,6 +32,7 @@
 		5E5D00942C4CD70600A5A697 /* LoremIpsumLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = LoremIpsumLib; path = ../../LoremIpsumLib; sourceTree = "<group>"; };
 		5E73CEDA2C500BF30088870F /* OneParagraphTextResponse.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = OneParagraphTextResponse.json; sourceTree = "<group>"; };
 		5E73CEDC2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorViewModel.swift; sourceTree = "<group>"; };
+		5E73CEE32C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorContentViewTest.swift; sourceTree = "<group>"; };
 		5EA445EB2C4C32A300315F14 /* LoremIpsum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoremIpsum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EA445EE2C4C32A300315F14 /* LoremIpsumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumApp.swift; sourceTree = "<group>"; };
 		5EA445F22C4C32A500315F14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,6 +61,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E73CEE02C501A3C0088870F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5E73CEDA2C500BF30088870F /* OneParagraphTextResponse.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		5E73CEE12C501A410088870F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5EA4461C2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5E73CEE22C501A4E0088870F /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				5E73CEE32C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift */,
+			);
+			path = ContentView;
+			sourceTree = "<group>";
+		};
 		5EA445E22C4C32A300315F14 = {
 			isa = PBXGroup;
 			children = (
@@ -101,8 +127,9 @@
 		5EA445FE2C4C32A600315F14 /* LoremIpsumTests */ = {
 			isa = PBXGroup;
 			children = (
-				5EA4461C2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift */,
-				5E73CEDA2C500BF30088870F /* OneParagraphTextResponse.json */,
+				5E73CEE22C501A4E0088870F /* ContentView */,
+				5E73CEE12C501A410088870F /* ViewModel */,
+				5E73CEE02C501A3C0088870F /* Data */,
 			);
 			path = LoremIpsumTests;
 			sourceTree = "<group>";
@@ -235,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EA4461D2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift in Sources */,
+				5E73CEE42C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
