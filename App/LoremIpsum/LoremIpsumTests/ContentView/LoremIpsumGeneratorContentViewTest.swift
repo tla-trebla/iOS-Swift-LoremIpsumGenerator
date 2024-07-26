@@ -8,15 +8,6 @@
 @testable import LoremIpsum
 import XCTest
 import LoremIpsumLib
-import SwiftUI
-
-struct LoremIpsumGeneratorContentView: View {
-    @StateObject var viewModel: LoremIpsumGeneratorViewModel
-    
-    var body: some View {
-        EmptyView()
-    }
-}
 
 final class LoremIpsumGeneratorContentViewTest: XCTestCase {
 

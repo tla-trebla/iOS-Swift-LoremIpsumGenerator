@@ -15,6 +15,7 @@
 		5EA445F32C4C32A500315F14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA445F22C4C32A500315F14 /* Assets.xcassets */; };
 		5EA445F62C4C32A500315F14 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA445F52C4C32A500315F14 /* Preview Assets.xcassets */; };
 		5EA4461D2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA4461C2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift */; };
+		5EAF3AF92C52D60E004923D8 /* LoremIpsumGeneratorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF3AF82C52D60E004923D8 /* LoremIpsumGeneratorContentView.swift */; };
 		5EB8E6582C4D9F100051D51E /* LoremIpsumLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5EB8E6572C4D9F100051D51E /* LoremIpsumLib */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		5EA445F52C4C32A500315F14 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5EA445FB2C4C32A600315F14 /* LoremIpsumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoremIpsumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EA4461C2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorViewModelTest.swift; sourceTree = "<group>"; };
+		5EAF3AF82C52D60E004923D8 /* LoremIpsumGeneratorContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				5E27FF9F2C5176E200507D59 /* Main */,
 				5E27FF9E2C513D8800507D59 /* ViewModel */,
 				5EA445F42C4C32A500315F14 /* Preview Content */,
+				5EAF3AF82C52D60E004923D8 /* LoremIpsumGeneratorContentView.swift */,
 			);
 			path = LoremIpsum;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			files = (
 				5EA445EF2C4C32A300315F14 /* LoremIpsumApp.swift in Sources */,
 				5E73CEDD2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift in Sources */,
+				5EAF3AF92C52D60E004923D8 /* LoremIpsumGeneratorContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

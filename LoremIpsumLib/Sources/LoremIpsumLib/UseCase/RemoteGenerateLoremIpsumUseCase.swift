@@ -5,14 +5,19 @@
 //  Created by Albert Pangestu on 21/07/24.
 //
 
-final class RemoteGenerateLoremIpsumUseCase {
+public final class RemoteGenerateLoremIpsumUseCase: GenerateLoremIpsumUseCase {
     let repository: GenerateLoremIpsumRepository
     
     init(repository: GenerateLoremIpsumRepository) {
         self.repository = repository
     }
     
-    func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
+    public init() {
+        let client = URLSessionHTTPClient()
+        self.repository = RemoteGenerateLoremIpsumRepository(client: client)
+    }
+    
+    public func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
         if numberOfParagraphs < 0 {
             throw GeneralError.InvalidParameter
         }
