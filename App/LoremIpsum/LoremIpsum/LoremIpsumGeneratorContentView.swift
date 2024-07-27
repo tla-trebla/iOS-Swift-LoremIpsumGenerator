@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import LoremIpsumLib
+import Domain
 
 struct LoremIpsumGeneratorContentView: View {
     @StateObject var viewModel: LoremIpsumGeneratorViewModel
@@ -19,7 +19,9 @@ struct LoremIpsumGeneratorContentView: View {
                     .keyboardType(.numberPad)
                     .onChange(of: numberOfParagraphs) { _, newValue in
                         numberOfParagraphs = newValue.filter({ "0123456789".contains($0) })
-                    }.padding()
+                    }
+                    .multilineTextAlignment(.center)
+                    .padding()
                 
                 Button(action: {
                     Task {

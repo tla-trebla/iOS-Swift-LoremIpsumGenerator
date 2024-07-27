@@ -7,7 +7,7 @@
 
 @testable import LoremIpsum
 import XCTest
-import LoremIpsumLib
+import Domain
 
 final class LoremIpsumGeneratorViewModelTest: XCTestCase {
 

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import LoremIpsumLib
+import Domain
 
 final class LoremIpsumGeneratorViewModel: ObservableObject {
     @Published var generatedText: String = ""

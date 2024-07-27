@@ -11,6 +11,7 @@
 		5E73CEDD2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E73CEDC2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift */; };
 		5E73CEDF2C5016040088870F /* LoremIpsumLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5E73CEDE2C5016040088870F /* LoremIpsumLib */; };
 		5E73CEE42C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E73CEE32C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift */; };
+		5E878BC32C5470A600E5AC5C /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 5E878BC22C5470A600E5AC5C /* Domain */; };
 		5EA445EF2C4C32A300315F14 /* LoremIpsumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA445EE2C4C32A300315F14 /* LoremIpsumApp.swift */; };
 		5EA445F32C4C32A500315F14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA445F22C4C32A500315F14 /* Assets.xcassets */; };
 		5EA445F62C4C32A500315F14 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA445F52C4C32A500315F14 /* Preview Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		5E73CEDA2C500BF30088870F /* OneParagraphTextResponse.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = OneParagraphTextResponse.json; sourceTree = "<group>"; };
 		5E73CEDC2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorViewModel.swift; sourceTree = "<group>"; };
 		5E73CEE32C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorContentViewTest.swift; sourceTree = "<group>"; };
+		5E878BC12C546F5000E5AC5C /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Domain; path = ../../Domain; sourceTree = "<group>"; };
 		5EA445EB2C4C32A300315F14 /* LoremIpsum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoremIpsum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EA445EE2C4C32A300315F14 /* LoremIpsumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumApp.swift; sourceTree = "<group>"; };
 		5EA445F22C4C32A500315F14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E878BC32C5470A600E5AC5C /* Domain in Frameworks */,
 				5E73CEDF2C5016040088870F /* LoremIpsumLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,6 +110,7 @@
 		5EA445E22C4C32A300315F14 = {
 			isa = PBXGroup;
 			children = (
+				5E878BC12C546F5000E5AC5C /* Domain */,
 				5E5D00942C4CD70600A5A697 /* LoremIpsumLib */,
 				5EA445ED2C4C32A300315F14 /* LoremIpsum */,
 				5EA445FE2C4C32A600315F14 /* LoremIpsumTests */,
@@ -178,6 +182,7 @@
 			name = LoremIpsum;
 			packageProductDependencies = (
 				5E73CEDE2C5016040088870F /* LoremIpsumLib */,
+				5E878BC22C5470A600E5AC5C /* Domain */,
 			);
 			productName = LoremIpsum;
 			productReference = 5EA445EB2C4C32A300315F14 /* LoremIpsum.app */;
@@ -561,6 +566,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5EB8E6562C4D9F100051D51E /* XCLocalSwiftPackageReference "../../LoremIpsumLib" */;
 			productName = LoremIpsumLib;
+		};
+		5E878BC22C5470A600E5AC5C /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
 		};
 		5EB8E6572C4D9F100051D51E /* LoremIpsumLib */ = {
 			isa = XCSwiftPackageProductDependency;

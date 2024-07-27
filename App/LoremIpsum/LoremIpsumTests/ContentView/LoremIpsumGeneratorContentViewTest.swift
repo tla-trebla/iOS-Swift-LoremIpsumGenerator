@@ -7,7 +7,7 @@
 
 @testable import LoremIpsum
 import XCTest
-import LoremIpsumLib
+import Domain
 
 final class LoremIpsumGeneratorContentViewTest: XCTestCase {
 
@@ -22,7 +22,7 @@ final class LoremIpsumGeneratorContentViewTest: XCTestCase {
     
     // MARK: - Helpers
     final class GenerateLoremIpsumUseCaseDummy: GenerateLoremIpsumUseCase {
-        func generateLoremIpsum(numberOfParagraphs: Int) async throws -> LoremIpsumLib.TextResponse {
+        func generateLoremIpsum(numberOfParagraphs: Int) async throws -> TextResponse {
             let data = """
 """.data(using: .utf8)!
             return try JSONDecoder().decode(TextResponse.self, from: data)
