@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5E73CEDB2C500BF30088870F /* OneParagraphTextResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5E73CEDA2C500BF30088870F /* OneParagraphTextResponse.json */; };
 		5E73CEDD2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E73CEDC2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift */; };
-		5E73CEDF2C5016040088870F /* LoremIpsumLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5E73CEDE2C5016040088870F /* LoremIpsumLib */; };
 		5E73CEE42C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E73CEE32C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift */; };
 		5E878BC32C5470A600E5AC5C /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 5E878BC22C5470A600E5AC5C /* Domain */; };
 		5EA445EF2C4C32A300315F14 /* LoremIpsumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA445EE2C4C32A300315F14 /* LoremIpsumApp.swift */; };
@@ -17,7 +16,6 @@
 		5EA445F62C4C32A500315F14 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA445F52C4C32A500315F14 /* Preview Assets.xcassets */; };
 		5EA4461D2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA4461C2C4C460600315F14 /* LoremIpsumGeneratorViewModelTest.swift */; };
 		5EAF3AF92C52D60E004923D8 /* LoremIpsumGeneratorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF3AF82C52D60E004923D8 /* LoremIpsumGeneratorContentView.swift */; };
-		5EB8E6582C4D9F100051D51E /* LoremIpsumLib in Frameworks */ = {isa = PBXBuildFile; productRef = 5EB8E6572C4D9F100051D51E /* LoremIpsumLib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +29,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5E5D00942C4CD70600A5A697 /* LoremIpsumLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = LoremIpsumLib; path = ../../LoremIpsumLib; sourceTree = "<group>"; };
 		5E73CEDA2C500BF30088870F /* OneParagraphTextResponse.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = OneParagraphTextResponse.json; sourceTree = "<group>"; };
 		5E73CEDC2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorViewModel.swift; sourceTree = "<group>"; };
 		5E73CEE32C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorContentViewTest.swift; sourceTree = "<group>"; };
@@ -51,7 +48,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E878BC32C5470A600E5AC5C /* Domain in Frameworks */,
-				5E73CEDF2C5016040088870F /* LoremIpsumLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +55,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EB8E6582C4D9F100051D51E /* LoremIpsumLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				5E878BC12C546F5000E5AC5C /* Domain */,
-				5E5D00942C4CD70600A5A697 /* LoremIpsumLib */,
 				5EA445ED2C4C32A300315F14 /* LoremIpsum */,
 				5EA445FE2C4C32A600315F14 /* LoremIpsumTests */,
 				5EA445EC2C4C32A300315F14 /* Products */,
@@ -181,7 +175,6 @@
 			);
 			name = LoremIpsum;
 			packageProductDependencies = (
-				5E73CEDE2C5016040088870F /* LoremIpsumLib */,
 				5E878BC22C5470A600E5AC5C /* Domain */,
 			);
 			productName = LoremIpsum;
@@ -203,7 +196,6 @@
 			);
 			name = LoremIpsumTests;
 			packageProductDependencies = (
-				5EB8E6572C4D9F100051D51E /* LoremIpsumLib */,
 			);
 			productName = LoremIpsumTests;
 			productReference = 5EA445FB2C4C32A600315F14 /* LoremIpsumTests.xctest */;
@@ -562,18 +554,9 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5E73CEDE2C5016040088870F /* LoremIpsumLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5EB8E6562C4D9F100051D51E /* XCLocalSwiftPackageReference "../../LoremIpsumLib" */;
-			productName = LoremIpsumLib;
-		};
 		5E878BC22C5470A600E5AC5C /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Domain;
-		};
-		5EB8E6572C4D9F100051D51E /* LoremIpsumLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LoremIpsumLib;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
