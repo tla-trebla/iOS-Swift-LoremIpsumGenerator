@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Domain
 
 @main
 struct LoremIpsumApp: App {
     var body: some Scene {
         WindowGroup {
-            EmptyView()
+            LoremIpsumGeneratorContentView(viewModel: LoremIpsumGeneratorViewModel(useCase: RemoteGenerateLoremIpsumUseCase(), clipboardService: UIKitClipboardService()))
         }
     }
 }
