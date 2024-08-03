@@ -8,6 +8,7 @@
 import UIKit
 import Domain
 
+@MainActor
 final class LoremIpsumGeneratorViewModel: ObservableObject {
     @Published var generatedText: String = ""
     @Published var errorMessage: String?
