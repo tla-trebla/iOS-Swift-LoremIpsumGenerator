@@ -18,6 +18,9 @@ final class URLSessionHTTPClient: HTTPClient {
             throw GeneralError.InvalidURL
         }
         
-        return try await URLSession.shared.data(from: finalURL)
+        var request = URLRequest(url: finalURL)
+        request.setValue("rmDFmbXrxKdv3wqA7HleqA==wDdWGXRjvQ4C3Bbu", forHTTPHeaderField: "X-Api-Key")
+        
+        return try await URLSession.shared.data(for: request)
     }
 }
