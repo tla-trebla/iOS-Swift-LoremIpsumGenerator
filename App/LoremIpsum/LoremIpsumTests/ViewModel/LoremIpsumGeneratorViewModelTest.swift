@@ -11,12 +11,14 @@ import Domain
 
 final class LoremIpsumGeneratorViewModelTest: XCTestCase {
 
+    @MainActor
     func test_initiate_generatedTextShouldEmpty() {
         let (sut, _) = makeSUT()
         
         XCTAssertEqual(sut.generatedText, "")
     }
     
+    @MainActor
     func test_initiate_useCaseShouldNotRequest() {
         let (_, useCase) = makeSUT()
         
@@ -24,7 +26,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     }
     
     func test_generate_useCaseShouldRequest() async {
-        let (sut, useCase) = makeSUT()
+        let (sut, useCase) = await makeSUT()
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         
@@ -32,7 +34,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     }
     
     func test_generateMoreThanOne_useCaseShouldRequestMoreThanOne() async {
-        let (sut, useCase) = makeSUT()
+        let (sut, useCase) = await makeSUT()
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
@@ -40,6 +42,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         XCTAssertEqual(useCase.messages, [.generateText, .generateText])
     }
     
+    @MainActor
     func test_generateReceivedError_handleErrorMessage() async throws {
         let error = NSError(domain: "Whatever", code: 10)
         let (sut, _) = makeSUT(result: .failure(error))
@@ -52,6 +55,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         }
     }
     
+    @MainActor
     func test_generateReceivedGeneralErrors_handleEachGeneralErrorMessage() async throws {
         let expectedErrors: [GeneralError] = [.ErrorDecoding, .InvalidParameter, .NetworkError]
         
@@ -78,6 +82,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         }
     }
     
+    @MainActor
     func test_generate_generatedTextShouldAvailable() async {
         let data = try! JSONFileLoader.load(fileName: "OneParagraphTextResponse")
         let textResponse = try! JSONDecoder().decode(TextResponse.self, from: data)
@@ -93,6 +98,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         XCTAssertEqual(sut.generatedText, textResponse.text)
     }
     
+    @MainActor
     func test_initiate_doesNotCopy() {
         let (_, service) = makeSUTClipboard()
         
@@ -100,10 +106,10 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     }
     
     func test_copyEmptyGeneratedText_doesNotCopy() async {
-        let (sut, service) = makeSUTClipboard()
+        let (sut, service) = await makeSUTClipboard()
         
         _ = try? await sut.generateLoremIpsum(numberOfParagraphs: 1)
-        sut.copyGeneratedText()
+        await sut.copyGeneratedText()
         
         XCTAssertEqual(service.message, [])
     }
@@ -113,10 +119,10 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         let textResponse = try! JSONDecoder().decode(TextResponse.self, from: data)
         let useCase = GenerateLoremIpsumUseCaseStub(result: .success(textResponse))
         let service = ClipboardServiceSpy()
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
+        let sut = await LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
         
         _ = try! await sut.generateLoremIpsum(numberOfParagraphs: 1)
-        sut.copyGeneratedText()
+        await sut.copyGeneratedText()
         
         XCTAssertEqual(service.message, [.didCopy])
     }
@@ -126,15 +132,16 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         let textResponse = try! JSONDecoder().decode(TextResponse.self, from: data)
         let useCase = GenerateLoremIpsumUseCaseStub(result: .success(textResponse))
         let service = ClipboardServiceSpy()
-        let sut = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
+        let sut = await LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
         
         _ = try! await sut.generateLoremIpsum(numberOfParagraphs: 1)
-        sut.copyGeneratedText()
-        sut.copyGeneratedText()
+        await sut.copyGeneratedText()
+        await sut.copyGeneratedText()
         
         XCTAssertEqual(service.message, [.didCopy, .didCopy])
     }
     
+    @MainActor
     func test_copy_generatedTextCopied() async {
         let data = try! JSONFileLoader.load(fileName: "OneParagraphTextResponse")
         let textResponse = try! JSONDecoder().decode(TextResponse.self, from: data)
@@ -150,6 +157,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
     }
     
     // MARK: - Helper
+    @MainActor
     private func makeSUTClipboard() -> (sut: LoremIpsumGeneratorViewModel, ClipboardServiceSpy) {
         let useCase = GenerateLoremIpsumUseCaseSpy()
         let service = ClipboardServiceSpy()
@@ -158,6 +166,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         return (sut, service)
     }
     
+    @MainActor
     private func makeSUT(result: Result<TextResponse, Error>) -> (sut: LoremIpsumGeneratorViewModel, GenerateLoremIpsumUseCaseStub) {
         let useCase = GenerateLoremIpsumUseCaseStub(result: result)
         let dummy = ClipboardServiceDummy()
@@ -166,6 +175,7 @@ final class LoremIpsumGeneratorViewModelTest: XCTestCase {
         return (sut, useCase)
     }
     
+    @MainActor
     private func makeSUT() -> (sut: LoremIpsumGeneratorViewModel, GenerateLoremIpsumUseCaseSpy) {
         let useCase = GenerateLoremIpsumUseCaseSpy()
         let dummy = ClipboardServiceDummy()

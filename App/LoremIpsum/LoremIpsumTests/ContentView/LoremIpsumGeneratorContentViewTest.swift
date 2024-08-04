@@ -11,7 +11,7 @@ import Domain
 
 final class LoremIpsumGeneratorContentViewTest: XCTestCase {
 
-    func test_initialize_canBeInitialized() {
+    @MainActor func test_initialize_canBeInitialized() {
         let useCase = GenerateLoremIpsumUseCaseDummy()
         let service = ClipboardServiceDummy()
         let viewModel = LoremIpsumGeneratorViewModel(useCase: useCase, clipboardService: service)
