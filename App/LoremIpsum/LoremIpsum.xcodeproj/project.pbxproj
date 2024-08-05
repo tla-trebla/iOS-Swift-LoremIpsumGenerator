@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E558A992C6133F9009326FE /* ScrollableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E558A982C6133F9009326FE /* ScrollableTextView.swift */; };
 		5E73CEDB2C500BF30088870F /* OneParagraphTextResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5E73CEDA2C500BF30088870F /* OneParagraphTextResponse.json */; };
 		5E73CEDD2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E73CEDC2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift */; };
 		5E73CEE42C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E73CEE32C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5E558A982C6133F9009326FE /* ScrollableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableTextView.swift; sourceTree = "<group>"; };
 		5E73CEDA2C500BF30088870F /* OneParagraphTextResponse.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = OneParagraphTextResponse.json; sourceTree = "<group>"; };
 		5E73CEDC2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorViewModel.swift; sourceTree = "<group>"; };
 		5E73CEE32C501A940088870F /* LoremIpsumGeneratorContentViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoremIpsumGeneratorContentViewTest.swift; sourceTree = "<group>"; };
@@ -78,6 +80,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		5E558A972C6133E5009326FE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5E558A982C6133F9009326FE /* ScrollableTextView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		5E73CEE02C501A3C0088870F /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +135,7 @@
 		5EA445ED2C4C32A300315F14 /* LoremIpsum */ = {
 			isa = PBXGroup;
 			children = (
+				5E558A972C6133E5009326FE /* Views */,
 				5E27FF9F2C5176E200507D59 /* Main */,
 				5E27FF9E2C513D8800507D59 /* ViewModel */,
 				5EA445F42C4C32A500315F14 /* Preview Content */,
@@ -269,6 +280,7 @@
 			files = (
 				5EA445EF2C4C32A300315F14 /* LoremIpsumApp.swift in Sources */,
 				5E73CEDD2C5013A20088870F /* LoremIpsumGeneratorViewModel.swift in Sources */,
+				5E558A992C6133F9009326FE /* ScrollableTextView.swift in Sources */,
 				5EAF3AF92C52D60E004923D8 /* LoremIpsumGeneratorContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
